@@ -1,5 +1,3 @@
-module regular : REGULAR =
-    struct
-        type regdef =
-    end
+type regdef = string
+
 ;;
