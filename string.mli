@@ -1,5 +1,5 @@
 val match_count : ~to_check:string -> ~regdef:regdef -> int
-(*val match_count_raw : ~to_check:string -> ~regdef:string -> int
+val match_count_raw : ~to_check:string -> ~regdef:string -> int
 val match_count_rule : ~to_check:string -> ~rule_name:string -> int
 
 val matching_substrings : ~to_check:string -> ~regdef:regdef -> string list
@@ -31,5 +31,4 @@ val replace_with_first_rule : ~to_change:string -> ~substitution:(string -> stri
 val replace_string_first : ~to_change:string -> ~to_substitute:string -> ~regdef:regdef -> ~times:int -> string
 val replace_string_first_raw : ~to_change:string -> ~to_substitute:string -> ~regdef:regdef -> ~times:int -> string
 val replace_string_first_rule : ~to_change:string -> ~to_substitute:string -> ~regdef:regdef -> ~times:int -> string
-*)
 ;;

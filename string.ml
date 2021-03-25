@@ -1,3 +1,2 @@
-let match_count s r =
-    9
+let match_count
 ;;
