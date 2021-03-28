@@ -1,6 +1,4 @@
-type regdef
-
-module type reg =
+module type Reg =
     sig
         type definition
 
@@ -14,15 +12,15 @@ module type reg =
      is equivalent to call:
    <function_name> param_1 ... ~regdef:(reg.create <string_1>) ... param_n *)
 
-module type rule =
+module type Rule =
     sig
         type name = string
 
         (* It defines and registers a rule. A rule is a regular definition that can be used through its name. *)
-        val create : ~name:name -> ~regdef:reg.definition -> unit
+        val create : ~name:name -> ~regdef:Reg.definition -> unit
         val create_raw : ~name:name -> ~regdef:string -> unit
 
-        val to_regdef : ~name:name -> reg.definition
+        val to_regdef : ~name:name -> Reg.definition
 
         exception Inexistent_rule of name
     end
@@ -33,15 +31,15 @@ module type rule =
    <function_name> param_1 ... ~regdef:(rule.to_regdef <string_1>) ... param_n *)
 
 (* It returns true if the string 'to_match' matches exactly with 'regdef'. *)
-val is_matching : ~to_match:string -> ~regdef:reg.definition -> bool
+val is_matching : ~to_match:string -> ~regdef:Reg.definition -> bool
 val is_matching_raw : ~to_match:string -> ~regdef:string -> bool
-val is_matching_rule : ~to_match:string -> ~name:rule.name -> bool
+val is_matching_rule : ~to_match:string -> ~name:Rule.name -> bool
 
-val is_matching_prefix : ~to_match:string -> ~regdef:reg.definition -> bool
+val is_matching_prefix : ~to_match:string -> ~regdef:Reg.definition -> bool
 val is_matching_prefix_raw : ~to_match:string -> ~regdef:string -> bool
-val is_matching_prefix_rule : ~to_match:string -> ~name:rule.name -> bool
+val is_matching_prefix_rule : ~to_match:string -> ~name:Rule.name -> bool
 
-val is_matching_suffix : ~to_match:string -> ~regdef:reg.definition -> bool
+val is_matching_suffix : ~to_match:string -> ~regdef:Reg.definition -> bool
 val is_matching_suffix_raw : ~to_match:string -> ~regdef:string -> bool
-val is_matching_suffix_rule : ~to_match:string -> ~name:rule.name -> bool
+val is_matching_suffix_rule : ~to_match:string -> ~name:Rule.name -> bool
 ;;
