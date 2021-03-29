@@ -38,10 +38,10 @@ module type Rule =
         type name = string
 
         (* It defines and registers a rule. A rule is a regular definition that can be used through its name. *)
-        val create : ~name:name -> ~regdef:Reg.definition -> unit
-        val create_raw : ~name:name -> ~regdef:string -> unit
+        val create : name -> Reg.definition -> unit
+        val create_raw : name -> string -> unit
 
-        val to_regdef : ~name:name -> Reg.definition
+        val to_regdef : name -> Reg.definition
 
         exception Inexistent_rule of name
     end
@@ -52,15 +52,15 @@ module type Rule =
    <function_name> param_1 ... ~regdef:(rule.to_regdef <string_1>) ... param_n *)
 
 (* It returns true if the string 'to_match' matches exactly with 'regdef'. *)
-val is_matching : ~to_match:string -> ~regdef:Reg.definition -> bool
-val is_matching_raw : ~to_match:string -> ~regdef:string -> bool
-val is_matching_rule : ~to_match:string -> ~name:Rule.name -> bool
+val is_matching : string -> Reg.definition -> bool
+val is_matching_raw : string -> string -> bool
+val is_matching_rule : string -> Rule.name -> bool
 
-val is_matching_prefix : ~to_match:string -> ~regdef:Reg.definition -> bool
-val is_matching_prefix_raw : ~to_match:string -> ~regdef:string -> bool
-val is_matching_prefix_rule : ~to_match:string -> ~name:Rule.name -> bool
+val is_matching_prefix : string -> Reg.definition -> bool
+val is_matching_prefix_raw : string -> string -> bool
+val is_matching_prefix_rule : string -> Rule.name -> bool
 
-val is_matching_suffix : ~to_match:string -> ~regdef:Reg.definition -> bool
-val is_matching_suffix_raw : ~to_match:string -> ~regdef:string -> bool
-val is_matching_suffix_rule : ~to_match:string -> ~name:Rule.name -> bool
+val is_matching_suffix : string -> Reg.definition -> bool
+val is_matching_suffix_raw : string -> string -> bool
+val is_matching_suffix_rule : string -> Rule.name -> bool
 ;;
