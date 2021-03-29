@@ -1,3 +1,4 @@
 (library
     (name regular)
+    (flags -warn-error -a+31)
 )

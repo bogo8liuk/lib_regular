@@ -1,0 +1,5 @@
+(test
+    (name test)
+    (libraries regular)
+    (flags -warn-error -a+31)
+)
