@@ -23,7 +23,7 @@ module type Reg =
     sig
         module Expr :
             sig
-                type t = string
+                type t = string (* concrete: should be abstract? *)
 
                 val is_valid : t -> bool
             end
@@ -47,7 +47,7 @@ module type Reg =
          is equivalent to call:
        <function_name> param_1 ... ~regdef:(rule.to_regdef <string_1>) ... param_n *)
 
-        module type Rule :
+        module Rule :
             sig
                 type name = string
 
@@ -60,5 +60,18 @@ module type Reg =
                 exception Inexistent_rule of name
             end
         ;;
+
+    (* It returns true if the string 'to_match' matches exactly with 'regdef'. *)
+        val is_matching : string -> Def.t -> bool
+        val is_matching_raw : string -> Expr.t -> bool
+        val is_matching_rule : string -> Rule.name -> bool
+
+        val is_matching_prefix : string -> Def.t -> bool
+        val is_matching_prefix_raw : string -> Expr.t -> bool
+        val is_matching_prefix_rule : string -> Rule.name -> bool
+
+        val is_matching_suffix : string -> Def.t -> bool
+        val is_matching_suffix_raw : string -> Expr.t -> bool
+        val is_matching_suffix_rule : string -> Rule.name -> bool
     end
 ;;
