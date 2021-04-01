@@ -19,36 +19,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-(* TODO: temporary *)
-module Regular : Reg =
+module Reg : REG =
     struct
-        type definition = string
+        (* TODO: from here it does not compile *)
+        module Expr : Reg.EXPR =
+            struct
+                type t = string
 
-        let create s = s
+                let is_valid s = true
+            end
+        module Def (EXPR : EXPR) =
+            struct
+                type t = string
 
-        exception Invalid_definition of string
+                let create s = s
+
+                exception Invalid_definition of EXPR.t
+            end
     end
 ;;
-
-module RRule : Rule =
-    struct
-        type name = string
-
-        let create ~name ~regdef = ()
-        let create_raw ~name ~regdef = ()
-
-        let to_regdef ~name = "hi"
-    end
-;;
-
-let is_matching ~to_match ~regdef = true
-let is_matching_raw ~to_match ~regdef = true
-let is_matching_rule ~to_match ~name = true
-
-let is_matching_prefix ~to_match ~regdef = true
-let is_matching_prefix_raw ~to_match ~regdef = true
-let is_matching_prefix_rule ~to_match ~name = true
-
-let is_matching_suffix ~to_match ~regdef = true
-let is_matching_suffix_raw ~to_match ~regdef = true
-let is_matching_suffix_rule ~to_match ~regdef = true
