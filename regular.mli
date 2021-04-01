@@ -19,25 +19,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-module type REG =
-sig
-    module type EXPR =
-        sig
-            type t = string
+module type Reg =
+    sig
+        module Expr :
+            sig
+                type t = string
 
-            val is_valid : t -> bool
-        end
-    ;;
+                val is_valid : t -> bool
+            end
+        ;;
 
-    module DEF (EXPR : EXPR) :
-        sig
-            type t
+        module Def :
+            sig
+                type t
 
-            val create : EXPR.t -> t
+                val create : Expr.t -> t
 
-            exception Invalid_definition of EXPR.t
-        end
-    ;;
+                exception Invalid_definition of Expr.t
+            end
+        ;;
 
     (* <function_name>_raw param_1 ... ~regdef:<string_1> ... param_n
          is equivalent to call:
@@ -47,4 +47,18 @@ sig
          is equivalent to call:
        <function_name> param_1 ... ~regdef:(rule.to_regdef <string_1>) ... param_n *)
 
-end
+        module type Rule :
+            sig
+                type name = string
+
+                (* It defines and registers a rule. A rule is a regular definition that can be used through its name. *)
+                val create : name -> Def.t -> unit
+                val create_raw : name -> Expr.t -> unit
+
+                val to_regdef : name -> Def.t
+
+                exception Inexistent_rule of name
+            end
+        ;;
+    end
+;;
