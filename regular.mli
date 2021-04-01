@@ -21,6 +21,7 @@ SOFTWARE.
 
 module Reg :
     sig
+        (* Expr should be hidden? *)
         module Expr :
             sig
                 type t = string (* concrete: should be abstract? *)

@@ -19,31 +19,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-val match_count : string -> Reg.definition -> int
-val match_count_raw : string -> string -> int
-val match_count_rule : string -> Rule.name -> int
+val match_count : string -> Reg.Def.t -> int
+val match_count_raw : string -> Reg.Expr.t -> int
+val match_count_rule : string -> Reg.Rule.name -> int
 
-val matching_substrings : string -> Reg.definition -> string list
-val matching_substrings_raw : string -> string -> string list
-val matching_substrings_rule : string -> Rule.name -> string list
+val matching_substrings : string -> Reg.Def.t -> string list
+val matching_substrings_raw : string -> Reg.Expr.t -> string list
+val matching_substrings_rule : string -> Reg.Rule.name -> string list
 
-val split_string : string -> Reg.definition -> string list
-val split_string_raw : string -> string -> string list
-val split_string_rule : string -> Rule.name -> string list
+val split_string : string -> Reg.Def.t -> string list
+val split_string_raw : string -> Reg.Expr.t -> string list
+val split_string_rule : string -> Reg.Rule.name -> string list
 
-val replace_with : string -> ('a -> string) -> 'a -> Reg.definition -> string
-val replace_with_raw : string -> ('a -> string) -> 'a -> string -> string
-val replace_with_rule : string -> ('a -> string) -> 'a -> Rule.name -> string
+val replace_with : string -> ('a -> string) -> 'a -> Reg.Def.t -> string
+val replace_with_raw : string -> ('a -> string) -> 'a -> Reg.Expr.t -> string
+val replace_with_rule : string -> ('a -> string) -> 'a -> Reg.Rule.name -> string
 
-val replace_string : string -> string -> Reg.definition -> string
-val replace_string_raw : string -> string -> string -> string
-val replace_string_rule : string -> string -> Rule.name -> string
+val replace_string : string -> string -> Reg.Def.t -> string
+val replace_string_raw : string -> string -> Reg.Expr.t -> string
+val replace_string_rule : string -> string -> Reg.Rule.name -> string
 
-val replace_with_first : string -> ('a -> string) -> 'a -> Reg.definition -> int -> string
-val replace_with_first_raw : string -> ('a -> string) -> 'a -> string -> int -> string
-val replace_with_first_rule : string -> ('a -> string) -> 'a -> Rule.name -> int -> string
+val replace_with_first : string -> ('a -> string) -> 'a -> Reg.Def.t -> int -> string
+val replace_with_first_raw : string -> ('a -> string) -> 'a -> Reg.Expr.t -> int -> string
+val replace_with_first_rule : string -> ('a -> string) -> 'a -> Reg.Rule.name -> int -> string
 
-val replace_string_first : string -> string -> Reg.definition -> int -> string
-val replace_string_first_raw : string -> string -> string -> int -> string
-val replace_string_first_rule : string -> string -> Rule.name -> int -> string
+val replace_string_first : string -> string -> Reg.Def.t -> int -> string
+val replace_string_first_raw : string -> string -> Reg.Expr.t -> int -> string
+val replace_string_first_rule : string -> string -> Reg.Rule.name -> int -> string
 ;;
