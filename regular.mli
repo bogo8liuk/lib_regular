@@ -19,48 +19,60 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-module type Reg =
-    sig
-        type definition
+module type REG =
+sig
+    module type EXPR =
+        sig
+            type t = string
 
-        val create : string -> definition
+            val is_valid : t -> bool
+        end
+    ;;
 
-        exception Invalid_definition of string
-    end
-;;
+    module DEF (EXPR : EXPR) :
+        sig
+            type t
 
-(* <function_name>_raw param_1 ... ~regdef:<string_1> ... param_n
-     is equivalent to call:
-   <function_name> param_1 ... ~regdef:(reg.create <string_1>) ... param_n *)
+            val create : EXPR.t -> t
 
-module type Rule =
-    sig
-        type name = string
+            exception Invalid_definition of EXPR.t
+        end
+    ;;
 
-        (* It defines and registers a rule. A rule is a regular definition that can be used through its name. *)
-        val create : name -> Reg.definition -> unit
-        val create_raw : name -> string -> unit
+    (* <function_name>_raw param_1 ... ~regdef:<string_1> ... param_n
+         is equivalent to call:
+       <function_name> param_1 ... ~regdef:(reg.create <string_1>) ... param_n *)
 
-        val to_regdef : name -> Reg.definition
+(* TODO: from here, it does not compile *)
+    module type RULE =
+        sig
+            type name = string
 
-        exception Inexistent_rule of name
-    end
-;;
+            (* It defines and registers a rule. A rule is a regular definition that can be used through its name. *)
+            val create : name -> DEF.t -> unit
+            val create_raw : name -> string -> unit
 
-(* <function_name>_rule param_1 ... ~rule_name:<string_1> ... param_n
-     is equivalent to call:
-   <function_name> param_1 ... ~regdef:(rule.to_regdef <string_1>) ... param_n *)
+            val to_regdef : name -> DEF.t
 
-(* It returns true if the string 'to_match' matches exactly with 'regdef'. *)
-val is_matching : string -> Reg.definition -> bool
-val is_matching_raw : string -> string -> bool
-val is_matching_rule : string -> Rule.name -> bool
+            exception Inexistent_rule of name
+        end
+    ;;
 
-val is_matching_prefix : string -> Reg.definition -> bool
-val is_matching_prefix_raw : string -> string -> bool
-val is_matching_prefix_rule : string -> Rule.name -> bool
+    (* <function_name>_rule param_1 ... ~rule_name:<string_1> ... param_n
+         is equivalent to call:
+       <function_name> param_1 ... ~regdef:(rule.to_regdef <string_1>) ... param_n *)
 
-val is_matching_suffix : string -> Reg.definition -> bool
-val is_matching_suffix_raw : string -> string -> bool
-val is_matching_suffix_rule : string -> Rule.name -> bool
+    (* It returns true if the string 'to_match' matches exactly with 'regdef'. *)
+    val is_matching : string -> DEF.t -> bool
+    val is_matching_raw : string -> EXPR.t -> bool
+    val is_matching_rule : string -> RULE.name -> bool
+
+    val is_matching_prefix : string -> DEF.t -> bool
+    val is_matching_prefix_raw : string -> EXPR.t -> bool
+    val is_matching_prefix_rule : string -> RULE.name -> bool
+
+    val is_matching_suffix : string -> DEF.t -> bool
+    val is_matching_suffix_raw : string -> EXPR.t -> bool
+    val is_matching_suffix_rule : string -> RULE.name -> bool
+end
 ;;
