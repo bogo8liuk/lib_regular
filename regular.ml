@@ -19,50 +19,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-module Reg =
-    struct
-        (* TODO: from here it does not compile *)
-        module Expr =
-            struct
-                type t = string
-
-                let is_valid s = true
-            end
-        ;;
-
-        module Def =
-            struct
-                type t = string
-
-                let create s = s
-
-                exception Invalid_definition of Expr.t
-            end
-        ;;
-
-        module Rule =
-            struct
-                type name = string
-
-                let create name regdef = ()
-                let create_raw name regdef = ()
-
-                let to_regdef name = "hi"
-
-                exception Inexistent_rule of name
-            end
-        ;;
-
-        let is_matching to_match regdef = true
-        let is_matching_raw to_match regdef = true
-        let is_matching_rule to_match name = true
-
-        let is_matching_prefix to_match regdef = true
-        let is_matching_prefix_raw to_match regdef = true
-        let is_matching_prefix_rule to_match name = true
-
-        let is_matching_suffix to_match regdef = true
-        let is_matching_suffix_raw to_match regdef = true
-        let is_matching_suffix_rule to_match regdef = true
-    end
-;;
+module Core = Core
+module String = String

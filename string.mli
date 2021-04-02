@@ -19,6 +19,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
+open Core
+
 val match_count : string -> Reg.Def.t -> int
 val match_count_raw : string -> Reg.Expr.t -> int
 val match_count_rule : string -> Reg.Rule.name -> int
