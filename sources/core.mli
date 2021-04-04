@@ -28,6 +28,33 @@ module Regdef :
 
         val create : literal -> t
 
+        val empty : t
+        val ( @~ ) : t
+
+        val listing : char list -> t
+        val ( @: ) : char list -> t
+
+        val range : char -> char -> t
+        val ( @- ) : char -> char -> t
+
+        val concatenation : t -> t -> t
+        val ( @. ) : t -> t -> t
+
+        val choice : t -> t -> t
+        val ( @| ) : t -> t -> t
+
+        val repetition : t -> t
+        val ( @* ) : t -> t
+
+        val positive_repetition : t -> t
+        val ( @+ ) : t -> t
+
+        val defined_repetition : t -> int -> t
+        val ( @> ) : t -> int -> t
+
+        val possibility : t -> t
+        val ( @? ) : t -> t
+
         exception Invalid_definition of literal
     end
 ;;
