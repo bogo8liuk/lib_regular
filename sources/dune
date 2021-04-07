@@ -2,5 +2,7 @@
 
 (library
     (name regular)
+    (libraries base)
+    (preprocess (pps ppx_jane))
     (flags -warn-error -a+31)
 )

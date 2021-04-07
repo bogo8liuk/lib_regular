@@ -19,50 +19,57 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-module Reg =
+module Regdef : Regdef =
     struct
-        (* TODO: from here it does not compile *)
-        module Expr =
-            struct
-                type t = string
+        type t =
+        type literal = string
 
-                let is_valid s = true
-            end
-        ;;
+        let is_valid literal =
 
-        module Def =
-            struct
-                type t = string
+        let empty =
 
-                let create s = s
+        let listing set =
 
-                exception Invalid_definition of Expr.t
-            end
-        ;;
+        let range c d =
 
-        module Rule =
-            struct
-                type name = string
+        let concatenation def1 def2 =
 
-                let create name regdef = ()
-                let create_raw name regdef = ()
+        let choice def1 def2 =
 
-                let to_regdef name = "hi"
+        let repetition def =
 
-                exception Inexistent_rule of name
-            end
-        ;;
+        let positive_repetition def =
 
-        let is_matching to_match regdef = true
-        let is_matching_raw to_match regdef = true
-        let is_matching_rule to_match name = true
+        let defined_repetition def times =
 
-        let is_matching_prefix to_match regdef = true
-        let is_matching_prefix_raw to_match regdef = true
-        let is_matching_prefix_rule to_match name = true
+        let possibility def =
 
-        let is_matching_suffix to_match regdef = true
-        let is_matching_suffix_raw to_match regdef = true
-        let is_matching_suffix_rule to_match regdef = true
+        exception Invalid_definition of literal
     end
+;;
+
+module Rule : Rule =
+    struct
+        type name = string
+
+        let create name regdef = ()
+        let create_raw name regdef = ()
+
+        let to_regdef name = "hi"
+
+        exception Inexistent_rule of name
+    end
+;;
+
+let is_matching to_match regdef = true
+let is_matching_raw to_match regdef = true
+let is_matching_rule to_match name = true
+
+let is_matching_prefix to_match regdef = true
+let is_matching_prefix_raw to_match regdef = true
+let is_matching_prefix_rule to_match name = true
+
+let is_matching_suffix to_match regdef = true
+let is_matching_suffix_raw to_match regdef = true
+let is_matching_suffix_rule to_match regdef = true
 ;;
