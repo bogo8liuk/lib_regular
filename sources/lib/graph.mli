@@ -26,9 +26,18 @@ module Graph :
         module Node :
             sig
                 type 'a t
+
+                val id : t -> int
+                val data : t -> 'a
             end
 
-        type 'a t
+        (* 'a is for data associated to nodes, while 'b is for ancillary data linked to the arches. *)
+        type 'a 'b t
 
+        val create : unit -> 'a 'b t
+
+        (* TODO: is it the correct return? *)
+        val add_node : 'a 'b t -> int -> 'a -> (int, int) result
+        val add_arch : 'a 'b t -> int -> int -> 'b -> (int, int) result
     end
 ;;

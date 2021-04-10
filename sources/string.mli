@@ -19,7 +19,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-open Core
+open Reg_core
 
 val match_count : string -> Regdef.t -> int
 val match_count_raw : string -> Regdef.literal -> int

@@ -26,10 +26,24 @@ module Graph =
         module Node =
             struct
                 type 'a t = {
-                    data : 'a ;
-                    id : int
+                    id : int ;
+                    mutable data : 'a
                 } [@@deriving hash, compare, sexp]
+        
+                let id v = v.id
+                let data v = v.data
             end
-        type 'a t = ('a Node.t, int list) Hashtbl.t
+        
+        type 'a node_data_pair = {
+            node : int ;
+            mutable data : 'a
+        }
+
+        type 'a 'b t = ('a Node.t, ('b node_data_pair) list) Hashtbl.t
+
+        let create () = Hashtbl.create (module Node)
+
+        let add_node g n d = Hashtbl.add g n d
+        let add_arch g n1 n2 d = Hashtbl.set g n1 { n2 ; d }
     end
 ;;
