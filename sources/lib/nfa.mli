@@ -19,4 +19,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-module NFA : Automaton
+open Automaton
+
+type regular_case =
+    | Empty_set
+    | Single of transition
+    | Choice of regular_case * regular_case
+    | Listing of char list
+    | Range of char * char
+    | Concatenation of regular_case * regular_case
+    | Repetition of regular_case
+    | Pos_repetition of regular_case
+    | Def_repetiton of regular_case
+    | Possibility of regular_case
+
+module NFA_State : State =
+    struct
+        type category = Non_final | Final
+
+        type t = int (* TODO: ? *)
+    end
+
+module NFA : Automaton (NFA_State)

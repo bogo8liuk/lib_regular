@@ -30,6 +30,10 @@ module type State =
         type t
     end
 
+type transition =
+    | Empty
+    | Next of char
+
 module type Automaton =
     functor (State : State) ->
     sig
