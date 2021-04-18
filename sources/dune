@@ -5,4 +5,5 @@
     (libraries base)
     (preprocess (pps ppx_jane))
     (flags -warn-error -a+31)
+    (modules_without_implementation automaton)
 )
