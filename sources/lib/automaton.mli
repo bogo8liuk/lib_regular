@@ -21,29 +21,25 @@ SOFTWARE.
 
 open Base
 
-module type State =
-    sig
+(* TODO: choose a correct interface *)
+
+module State =
+    struct
         type category = Non_final | Final
 
         type t
-
-        val category_of : t -> category
     end
 
 module Automaton =
-    struct
-        module type S =
-            functor (State : State) ->
-            sig
-                type t
+    sig
+        type t
 
-                val starting_status : t -> State.t
+        val category_of : State.t -> category
 
-                val current_status : t -> State.t
+        val starting_status : t -> State.t
 
-                val choose : t -> State.t -> char -> status
-            end
+        val current_status : t -> State.t
 
-        type t = (module S)
+        val choose : t -> State.t -> char -> (State.t, _) Set.t
     end
 ;;
