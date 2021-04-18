@@ -19,30 +19,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-open Base
-
-(* TODO: choose a correct interface *)
-
-module type State =
-    sig
-        type category = Non_final | Final
-
-        type t
-    end
-
-module type Automaton =
-    functor (State : State) ->
-    sig
-        type t
-
-        val create : unit -> t
-
-        val category_of : State.t -> category
-
-        val starting_status : t -> State.t
-
-        val current_status : t -> State.t
-
-        val choose : t -> State.t -> char -> (State.t, _) Set.t
-    end
-;;
+module NFA : Automaton
