@@ -30,16 +30,20 @@ module type State =
         type t
     end
 
+module Constructor_case =
+    sig
+        type t
+    end
+
 type transition =
     | Empty
     | Next of char
 
-module type Automaton =
-    functor (State : State) ->
+module Automaton (State : State) (Case : Constructor_case) =
     sig
         type t
 
-        val create : unit -> t
+        val create : Case.t -> t
 
         val category_of : State.t -> State.category
 
