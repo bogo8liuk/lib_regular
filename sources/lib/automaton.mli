@@ -41,7 +41,7 @@ module type Automaton =
 
         val create : unit -> t
 
-        val category_of : State.t -> category
+        val category_of : State.t -> State.category
 
         val starting_status : t -> State.t
 
