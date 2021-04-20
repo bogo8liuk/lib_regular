@@ -35,7 +35,7 @@ module type Sig =
             struct
                 type category = Non_final | Final
 
-                type state = int (* TODO: concrete *)
+                type t = int (* TODO: concrete *)
             end
 
         val create : unit -> t
