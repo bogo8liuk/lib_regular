@@ -19,11 +19,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-open Automaton
+module type Sig =
+    sig
+        include Automaton.Sig
 
-module Regular_case : Constructor_case =
-    struct
-        type t =
+        type regular_case =
             | Empty_set
             | Single of transition
             | Choice of regular_case * regular_case
@@ -34,12 +34,9 @@ module Regular_case : Constructor_case =
             | Pos_repetition of regular_case
             | Def_repetiton of regular_case
             | Possibility of regular_case
+
+        val create : regular_case -> t
     end
 
-module NFA_State : State =
-    struct
-        type t = int (* TODO: ? *)
-    end
-
-module NFA = Automaton (NFA_State) (Regular_case)
+module NFA : Sig
 ;;

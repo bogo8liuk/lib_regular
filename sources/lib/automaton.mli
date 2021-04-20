@@ -23,27 +23,22 @@ open Base
 
 (* TODO: choose a correct interface *)
 
-module type State =
-    sig
-        type category = Non_final | Final
-
-        type t
-    end
-
-module Constructor_case =
-    sig
-        type t
-    end
-
 type transition =
     | Empty
     | Next of char
 
-module Automaton (State : State) (Case : Constructor_case) =
+module type Sig =
     sig
         type t
 
-        val create : Case.t -> t
+        module State =
+            struct
+                type category = Non_final | Final
+
+                type state = int (* TODO: concrete *)
+            end
+
+        val create : unit -> t
 
         val category_of : State.t -> State.category
 
