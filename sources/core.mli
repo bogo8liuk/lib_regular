@@ -19,6 +19,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
+open Base
+
 module Regdef :
     sig
         type t
@@ -26,7 +28,7 @@ module Regdef :
 
         val is_valid : literal -> bool
 
-        val create : literal -> t
+        val create : literal -> (t, literal) result
 
         val empty : t
 
@@ -45,8 +47,6 @@ module Regdef :
         val defined_repetition : t -> int -> t
 
         val possibility : t -> t
-
-        exception Invalid_definition of literal
     end
 ;;
 
@@ -66,9 +66,7 @@ module Rule :
         val create : name -> Regdef.t -> unit
         val create_raw : name -> Regdef.literal -> unit
 
-        val to_regdef : name -> Regdef.t
-
-        exception Inexistent_rule of name
+        val to_regdef : name -> (Regdef.t, name) result
     end
 ;;
 
