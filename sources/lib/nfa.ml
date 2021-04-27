@@ -33,17 +33,18 @@ module NFA : NFA =
             | Next of State.t * State.category * (transition * t) list
 
         let _create case ?(id = 0) =
-            | Single tr ->
-                Next (id, Non_final, [(tr, Base (id + 1, Final))])
-            | Choice (r1, r2) ->
-                (* TODO *)
-            | Listing clist ->
-            | Range (c1, c2) ->
-            | Concatenation (r1, r2) ->
-            | Repetition r ->
-            | Pos_repetition r ->
-            | Def_repetition r ->
-            | Possibility r ->
+            match case with
+                | Single tr ->
+                    Next (id, Non_final, [(tr, Base (id + 1, Final))])
+                | Choice (r1, r2) ->
+                    (* TODO *)
+                | Listing clist ->
+                | Range (c1, c2) ->
+                | Concatenation (r1, r2) ->
+                | Repetition r ->
+                | Pos_repetition r ->
+                | Def_repetition r ->
+                | Possibility r ->
 
         let create case =
             _create case ~id:0
