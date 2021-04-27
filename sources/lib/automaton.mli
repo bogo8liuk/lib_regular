@@ -29,14 +29,14 @@ type transition =
 
 module type Sig =
     sig
-        type t
-
-        module State =
-            struct
+        module State :
+            sig
                 type category = Non_final | Final
 
                 type t = int (* TODO: concrete *)
             end
+
+        type t
 
         val create : unit -> t
 

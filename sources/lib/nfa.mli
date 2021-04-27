@@ -24,7 +24,6 @@ module type Sig =
         include Automaton.Sig
 
         type regular_case =
-            | Empty_set
             | Single of transition
             | Choice of regular_case * regular_case
             | Listing of char list
