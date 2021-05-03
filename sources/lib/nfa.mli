@@ -24,7 +24,7 @@ module type Sig =
         include Automaton.Sig
 
         type regular_case =
-            | Single of transition
+            | Single of Automaton.transition
             | Choice of regular_case * regular_case
             | Listing of char list
             | Range of char * char
@@ -33,6 +33,7 @@ module type Sig =
             | Pos_repetition of regular_case
             | Def_repetiton of regular_case
             | Possibility of regular_case
+            | Construct of t
 
         val create : regular_case -> t
     end

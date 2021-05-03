@@ -21,8 +21,6 @@ SOFTWARE.
 
 open Base
 
-(* TODO: choose a correct interface *)
-
 type transition =
     | Empty
     | Next of char

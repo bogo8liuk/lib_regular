@@ -19,6 +19,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
+open Base
+
 module NFA : NFA =
     struct
         module State : State =
@@ -28,16 +30,34 @@ module NFA : NFA =
                 type t = int
             end
 
-        type t =
-            | Base of State.t * State.category
-            | Next of State.t * State.category * (transition * t) list
+        type t = (State.t * State.category * State.t list) array
 
-        let _create case ?(id = 0) =
+        type regular_case =
+            | Single of Automaton.transition
+            | Choice of regular_case * regular_case
+            | Listing of char list
+            | Range of char * char
+            | Concatenation of regular_case * regular_case
+            | Repetition of regular_case
+            | Pos_repetition of regular_case
+            | Def_repetiton of regular_case
+            | Possibility of regular_case
+            | Construct of t
+
+        let number_of : t -> State.t =
+            fun (s, _, _) -> s
+
+        let category_of : t -> State.category =
+            fun (_, c, _) -> c
+
+        let adjacent_of : t -> State.t list =
+            fun (_, _, l) -> l
+
+        let rec _create ~case ~id ~res =
             match case with
                 | Single tr ->
-                    Next (id, Non_final, [(tr, Base (id + 1, Final))])
-                | Choice (r1, r2) ->
                     (* TODO *)
+                | Choice (r1, r2) ->
                 | Listing clist ->
                 | Range (c1, c2) ->
                 | Concatenation (r1, r2) ->
@@ -47,7 +67,7 @@ module NFA : NFA =
                 | Possibility r ->
 
         let create case =
-            _create case ~id:0
+            _create ~case:case ~id:1 ~res:(Next (0, Non_final, []))
 
     end
 ;;
