@@ -26,8 +26,8 @@ module type Sig =
         type regular_case =
             | Single of Automaton.transition
             | Choice of regular_case * regular_case
-            | Listing of char list
-            | Range of char * char
+            | Listing of Char.t List.t
+            | Range of Char.t * Char.t
             | Concatenation of regular_case * regular_case
             | Repetition of regular_case
             | Pos_repetition of regular_case
