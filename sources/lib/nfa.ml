@@ -27,10 +27,12 @@ module NFA : NFA =
             struct
                 type category = Non_final | Final
 
-                type t = int
+                type t = Int.t
             end
 
-        type t = (State.t * State.category * State.t list) array
+        type atom = (State.category * (State.t * Automaton.transition) List.t)
+
+        type t = atom Array.t (* State.t is used to index *)
 
         type regular_case =
             | Single of Automaton.transition
@@ -50,13 +52,22 @@ module NFA : NFA =
         let category_of : t -> State.category =
             fun (_, c, _) -> c
 
-        let adjacent_of : t -> State.t list =
+        let adjacent_of : t -> State.t List.t =
             fun (_, _, l) -> l
 
-        let rec _create ~case ~id ~res =
+        let make : atom List.t -> atom Array.t =
+            (* TODO *)
+
+        let rec _create ~case ~id ~res ~meta =
             match case with
                 | Single tr ->
-                    (* TODO *)
+                    let q1 = id
+                    and (q2, symbol) = (id + 1, tr) in
+                    match meta with
+                        | [] ->
+                            make (q1, Final, [(q2, symbol)]) :: res
+                        | r :: tail ->
+                            _create ~case:r ~id:(id + 2) ~res:((q1, Non_final, [(q2, symbol)])) ~meta:tail
                 | Choice (r1, r2) ->
                 | Listing clist ->
                 | Range (c1, c2) ->
@@ -65,9 +76,10 @@ module NFA : NFA =
                 | Pos_repetition r ->
                 | Def_repetition r ->
                 | Possibility r ->
+                | Construct t ->
 
         let create case =
-            _create ~case:case ~id:1 ~res:(Next (0, Non_final, []))
+            _create ~case:case ~id:0 ~res:[] ~meta:[]
 
     end
 ;;
