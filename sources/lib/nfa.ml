@@ -46,14 +46,11 @@ module NFA : NFA =
             | Possibility of regular_case
             | Construct of t
 
-        let number_of : t -> State.t =
-            fun (s, _, _) -> s
+        let number_of : State.t * atom -> State.t =
+            fun (s, _) -> s
 
-        let category_of : t -> State.category =
-            fun (_, c, _) -> c
-
-        let adjacent_of : t -> State.t List.t =
-            fun (_, _, l) -> l
+        let atom_of : State.t * atom -> atom =
+            fun (_, a) -> a
 
         let make : atom List.t -> atom Array.t =
             (* TODO *)
