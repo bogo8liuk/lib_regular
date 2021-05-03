@@ -23,7 +23,7 @@ open Base
 
 type transition =
     | Empty
-    | Next of char
+    | Next of Char.t
 
 module type Sig =
     sig
@@ -31,12 +31,12 @@ module type Sig =
             sig
                 type category = Non_final | Final
 
-                type t = int (* TODO: concrete *)
+                type t = Int.t (* TODO: concrete *)
             end
 
         type t
 
-        val create : unit -> t
+        val create : Unit.t -> t
 
         val category_of : State.t -> State.category
 
@@ -44,6 +44,6 @@ module type Sig =
 
         val current_status : t -> State.t
 
-        val choose : t -> State.t -> char -> (State.t, _) Set.t
+        val choose : t -> State.t -> Char.t -> (State.t, _) Set.t (* TODO: fix *)
     end
 ;;

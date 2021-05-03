@@ -25,19 +25,19 @@ module Regdef :
     sig
         type t
 
-        type literal = string
+        type literal = String.t
 
-        type special_id = string
+        type special_id = String.t
 
-        val is_valid : literal -> bool
+        val is_valid : literal -> Bool.t
 
         val create : literal -> [> `Ok of t | `Invalid_regex of literal | `Unknown_identifier of special_id ]
 
         val empty : t
 
-        val listing : char list -> t
+        val listing : Char.t List.t -> t
 
-        val range : char -> char -> t
+        val range : Char.t -> Char.t -> t
 
         val concatenation : t -> t -> t
 
@@ -47,7 +47,7 @@ module Regdef :
 
         val positive_repetition : t -> t
 
-        val defined_repetition : t -> int -> t
+        val defined_repetition : t -> Int.t -> t
 
         val possibility : t -> t
     end
@@ -66,23 +66,23 @@ module Rule :
         type name = Regdef.special_id
 
         (* It defines and registers a rule. A rule is a regular definition that can be used through its name. *)
-        val create : name -> Regdef.t -> unit
-        val create_raw : name -> Regdef.literal -> unit
+        val create : name -> Regdef.t -> Unit.t
+        val create_raw : name -> Regdef.literal -> Unit.t
 
         val to_regdef : name -> [> `Ok of Regdef.t | `Unknown_identifier of name ]
     end
 ;;
 
     (* It returns true if the string 'to_match' matches exactly with 'regdef'. *)
-val is_matching : string -> Regdef.t -> bool
-val is_matching_raw : string -> Regdef.literal -> [> `Ok of bool | `Invalid_regex of Regdef.literal ]
-val is_matching_rule : string -> Rule.name -> [> `Ok of bool | `Unknown_identifier of Rule.name ]
+val is_matching : String.t -> Regdef.t -> Bool.t
+val is_matching_raw : String.t -> Regdef.literal -> [> `Ok of Bool.t | `Invalid_regex of Regdef.literal ]
+val is_matching_rule : String.t -> Rule.name -> [> `Ok of Bool.t | `Unknown_identifier of Rule.name ]
 
-val is_matching_prefix : string -> Regdef.t -> bool
-val is_matching_prefix_raw : string -> Regdef.literal -> [> `Ok of bool | `Invalid_regex of Regdef.literal ]
-val is_matching_prefix_rule : string -> Rule.name -> [> `Ok of bool | `Unknown_identifier of Rule.name ]
+val is_matching_prefix : String.t -> Regdef.t -> Bool.t
+val is_matching_prefix_raw : String.t -> Regdef.literal -> [> `Ok of Bool.t | `Invalid_regex of Regdef.literal ]
+val is_matching_prefix_rule : String.t -> Rule.name -> [> `Ok of Bool.t | `Unknown_identifier of Rule.name ]
 
-val is_matching_suffix : string -> Regdef.t -> bool
-val is_matching_suffix_raw : string -> Regdef.literal -> [> `Ok of bool | `Invalid_regex of Regdef.literal ]
-val is_matching_suffix_rule : string -> Rule.name -> [> `Ok of bool | `Unknown_identifier of Rule.name ]
+val is_matching_suffix : String.t -> Regdef.t -> Bool.t
+val is_matching_suffix_raw : String.t -> Regdef.literal -> [> `Ok of Bool.t | `Invalid_regex of Regdef.literal ]
+val is_matching_suffix_rule : String.t -> Rule.name -> [> `Ok of Bool.t | `Unknown_identifier of Rule.name ]
 ;;

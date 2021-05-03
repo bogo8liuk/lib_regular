@@ -22,7 +22,7 @@ SOFTWARE.
 module Regdef : Regdef =
     struct
         type t =
-        type literal = string
+        type literal = String.t
 
         let is_valid literal =
 
@@ -50,7 +50,7 @@ module Regdef : Regdef =
 
 module Rule : Rule =
     struct
-        type name = string
+        type name = String.t
 
         let create name regdef = ()
         let create_raw name regdef = ()

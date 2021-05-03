@@ -21,31 +21,31 @@ SOFTWARE.
 
 open Core
 
-val match_count : string -> Regdef.t -> int
-val match_count_raw : string -> Regdef.literal -> [> `Ok of int | `Invalid_regex of Regdef.literal ]
-val match_count_rule : string -> Rule.name -> [> `Ok of int | `Unknown_identifier of Rule.name ]
+val match_count : String.t -> Regdef.t -> Int.t
+val match_count_raw : String.t -> Regdef.literal -> [> `Ok of Int.t | `Invalid_regex of Regdef.literal ]
+val match_count_rule : String.t -> Rule.name -> [> `Ok of Int.t | `Unknown_identifier of Rule.name ]
 
-val matching_substrings : string -> Regdef.t -> string list
-val matching_substrings_raw : string -> Regdef.literal -> [> `Ok of string list | `Invalid_regex of Regdef.literal ]
-val matching_substrings_rule : string -> Rule.name -> [> `Ok of string list | `Unknown_identifier of Rule.name ]
+val matching_subString.ts : String.t -> Regdef.t -> String.t List.t
+val matching_subString.ts_raw : String.t -> Regdef.literal -> [> `Ok of String.t List.t | `Invalid_regex of Regdef.literal ]
+val matching_subString.ts_rule : String.t -> Rule.name -> [> `Ok of String.t List.t | `Unknown_identifier of Rule.name ]
 
-val split_string : string -> Regdef.t -> string list
-val split_string_raw : string -> Regdef.literal -> [> `Ok of string list | `Invalid_regex of Regdef.literal ]
-val split_string_rule : string -> Rule.name -> [> `Ok of string list | `Unknown_identifier of Rule.name ]
+val split_String.t : String.t -> Regdef.t -> String.t List.t
+val split_String.t_raw : String.t -> Regdef.literal -> [> `Ok of String.t List.t | `Invalid_regex of Regdef.literal ]
+val split_String.t_rule : String.t -> Rule.name -> [> `Ok of String.t List.t | `Unknown_identifier of Rule.name ]
 
-val replace_with : string -> ('a -> string) -> 'a -> Regdef.t -> string
-val replace_with_raw : string -> ('a -> string) -> 'a -> Regdef.literal -> [> `Ok of string | `Invalid_regex of Regdef.literal ]
-val replace_with_rule : string -> ('a -> string) -> 'a -> Rule.name -> [> `Ok of string | `Unknown_identifier of Rule.name ]
+val replace_with : String.t -> ('a -> String.t) -> 'a -> Regdef.t -> String.t
+val replace_with_raw : String.t -> ('a -> String.t) -> 'a -> Regdef.literal -> [> `Ok of String.t | `Invalid_regex of Regdef.literal ]
+val replace_with_rule : String.t -> ('a -> String.t) -> 'a -> Rule.name -> [> `Ok of String.t | `Unknown_identifier of Rule.name ]
 
-val replace_string : string -> string -> Regdef.t -> string
-val replace_string_raw : string -> string -> Regdef.literal -> [> `Ok of string | `Invalid_regex of Regdef.literal ]
-val replace_string_rule : string -> string -> Rule.name -> [> `Ok of string | `Unknown_identifier of Rule.name ]
+val replace_String.t : String.t -> String.t -> Regdef.t -> String.t
+val replace_String.t_raw : String.t -> String.t -> Regdef.literal -> [> `Ok of String.t | `Invalid_regex of Regdef.literal ]
+val replace_String.t_rule : String.t -> String.t -> Rule.name -> [> `Ok of String.t | `Unknown_identifier of Rule.name ]
 
-val replace_with_first : string -> ('a -> string) -> 'a -> Regdef.t -> int -> string
-val replace_with_first_raw : string -> ('a -> string) -> 'a -> Regdef.literal -> int -> [> `Ok of string | `Invalid_regex of Regdef.literal ]
-val replace_with_first_rule : string -> ('a -> string) -> 'a -> Rule.name -> int -> [> `Ok of string | `Unknown_identifier of Rule.name ]
+val replace_with_first : String.t -> ('a -> String.t) -> 'a -> Regdef.t -> Int.t -> String.t
+val replace_with_first_raw : String.t -> ('a -> String.t) -> 'a -> Regdef.literal -> Int.t -> [> `Ok of String.t | `Invalid_regex of Regdef.literal ]
+val replace_with_first_rule : String.t -> ('a -> String.t) -> 'a -> Rule.name -> Int.t -> [> `Ok of String.t | `Unknown_identifier of Rule.name ]
 
-val replace_string_first : string -> string -> Regdef.t -> int -> string
-val replace_string_first_raw : string -> string -> Regdef.literal -> int -> [> `Ok of string | `Invalid_regex of Regdef.literal ]
-val replace_string_first_rule : string -> string -> Rule.name -> int -> [> `Ok of string | `Unknown_identifier of Rule.name ]
+val replace_String.t_first : String.t -> String.t -> Regdef.t -> Int.t -> String.t
+val replace_String.t_first_raw : String.t -> String.t -> Regdef.literal -> Int.t -> [> `Ok of String.t | `Invalid_regex of Regdef.literal ]
+val replace_String.t_first_rule : String.t -> String.t -> Rule.name -> Int.t -> [> `Ok of String.t | `Unknown_identifier of Rule.name ]
 ;;
