@@ -31,7 +31,7 @@ module type Sig =
             | Concatenation of regular_case * regular_case
             | Repetition of regular_case
             | Pos_repetition of regular_case
-            | Def_repetiton of regular_case
+            | Def_repetiton of regular_case * Int.t
             | Possibility of regular_case
             | Construct of t
 

@@ -45,7 +45,7 @@ module NFA : NFA =
             | Concatenation of regular_case * regular_case
             | Repetition of regular_case
             | Pos_repetition of regular_case
-            | Def_repetiton of regular_case
+            | Def_repetiton of regular_case * Int.t
             | Possibility of regular_case
             | Construct of t
 
@@ -61,7 +61,7 @@ module NFA : NFA =
         (* stack is used for tail recursion. *)
         let rec _create ~case ~id ~res ~stack =
             match case with
-                | Single tr, s, e -> (
+                | (Single tr), s, e -> (
                     match stack with
                         | [] ->
                             make ((s, { category = Non_final ; adjacencies = [e, tr] }) :: res) (id + 1)
@@ -73,7 +73,7 @@ module NFA : NFA =
                                     res)
                                 ~stack:tail
                 )
-                | Choice (r1, r2), s, e ->
+                | (Choice (r1, r2)), s, e ->
                     _create
                         ~case:(r1, id, id + 2)
                         ~id:(id + 3)
@@ -82,19 +82,47 @@ module NFA : NFA =
                             (s, { category = Non_final ; adjacencies = [(id, Empty); (id + 1, Empty)] }) ::
                             res)
                         ~stack:((r2, id + 1, id + 3) :: stack)
-                | Listing clist, s, e ->
-                | Range (c1, c2), s, e ->
-                | Concatenation (r1, r2), s, e ->
+                | (Listing clist), s, e ->
+                | (Range (c1, c2)), s, e ->
+                | (Concatenation (r1, r2)), s, e ->
                     _create
                         ~case:(r1, s, id + 1)
                         ~id:(id + 1)
                         ~res:res
                         ~stack:((r2, id + 1, e) :: stack)
-                | Repetition r, s, e ->
-                | Pos_repetition r, s, e ->
-                | Def_repetition r, s, e ->
-                | Possibility r, s, e ->
-                | Construct t, s, e ->
+                | (Repetition r), s, e ->
+                    _create
+                        ~case:(r, id + 1, id + 2)
+                        ~id:(id + 2)
+                        ~res:((id + 2, { category = Non_final ; adjacencies = [(e, Empty); (id + 1, Empty)] }) ::
+                            (s, { category = Non_final ; adjacencies = [(e, Empty); (id + 1, Empty)] }) ::
+                            res)
+                        ~stack:stack
+                | (Pos_repetition r), s, e ->
+                    _create
+                        ~case:(r, id + 1, id + 2)
+                        ~id:(id + 2)
+                        ~res:((id + 2, { category = Non_final ; adjacencies = [(e, Empty); (id + 1, Empty)] }) ::
+                            (s, { category = Non_final ; adjacencies = [(id + 1, Empty)] }) ::
+                            res)
+                        ~stack:stack
+                | (Def_repetition (r, n)), s, e -> (
+                    match n with
+                        | 1 ->
+                            _create
+                                ~case:(r, s, e)
+                                ~id:id
+                                ~res:res
+                                ~stack:stack
+                        | _ ->
+                            _create
+                                ~case:(r, s, id + 1)
+                                ~id:(id + 1)
+                                ~res:res
+                                ~stack:(((Def_repetition (r, n - 1)), id + 1, e) :: stack)
+                )
+                | (Possibility r), s, e ->
+                | (Construct t), s, e ->
 
         let create case =
             _create ~case:(case, 1, 0) ~id:1 ~res:[(0, Final, [])] ~stack:[]
