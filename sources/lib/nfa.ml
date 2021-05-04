@@ -61,24 +61,31 @@ module NFA : NFA =
                     match stack with
                         | [] ->
                             make (s, Non_final, [e, tr]) :: res
-                        | (r, q) :: tail ->
+                        | (r, qs, qe) :: tail ->
                             _create
-                                ~case:(r, (id + 1), q)
-                                ~id:(id + 1)
-                                ~res:((s, Non_final, [(e, tr)]) :: res)
+                                ~case:(r, qs, qe)
+                                ~id:id
+                                ~res:((s, Non_final, [(e, tr)]) ::
+                                    res)
                                 ~stack:tail
                 )
                 | Choice (r1, r2), s, e ->
                     _create
-                        ~case:()
-                        ~id:
-                        ~res:(() :: res)
-                        ~stack:
+                        ~case:(r1, id, id + 2)
+                        ~id:(id + 3)
+                        ~res:((id + 2, Non_final, [(e, Empty)]) ::
+                            (id + 3, Non_final, [(e, Empty)]) ::
+                            (s, Non_final, [(id, Empty); (id + 1, Empty)]) ::
+                            res)
+                        ~stack:((r2, id + 1, id + 3) :: stack)
                 | Listing clist, s, e ->
                 | Range (c1, c2), s, e ->
-                | Concatenation (r1, r2), s, e -> (
-                    _create ~case:(r1, s, id + 1) ~id:id ~res:res ~stack:((r2, e) :: stack)
-                )
+                | Concatenation (r1, r2), s, e ->
+                    _create
+                        ~case:(r1, s, id + 1)
+                        ~id:(id + 1)
+                        ~res:res
+                        ~stack:((r2, id + 1, e) :: stack)
                 | Repetition r, s, e ->
                 | Pos_repetition r, s, e ->
                 | Def_repetition r, s, e ->
