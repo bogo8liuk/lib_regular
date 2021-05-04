@@ -55,28 +55,38 @@ module NFA : NFA =
         let make : atom List.t -> atom Array.t =
             (* TODO *)
 
-        let rec _create ~case ~id ~res ~meta =
+        let rec _create ~case ~id ~res ~stack =
             match case with
-                | Single tr ->
-                    let q1 = id
-                    and (q2, symbol) = (id + 1, tr) in
-                    match meta with
+                | Single tr, s, e -> (
+                    match stack with
                         | [] ->
-                            make (q1, Final, [(q2, symbol)]) :: res
-                        | r :: tail ->
-                            _create ~case:r ~id:(id + 2) ~res:(q1, Non_final, [(q2, symbol)]) ~meta:tail
-                | Choice (r1, r2) ->
-                | Listing clist ->
-                | Range (c1, c2) ->
-                | Concatenation (r1, r2) ->
-                | Repetition r ->
-                | Pos_repetition r ->
-                | Def_repetition r ->
-                | Possibility r ->
-                | Construct t ->
+                            make (s, Non_final, [e, tr]) :: res
+                        | (r, q) :: tail ->
+                            _create
+                                ~case:(r, (id + 1), q)
+                                ~id:(id + 1)
+                                ~res:((s, Non_final, [(e, tr)]) :: res)
+                                ~stack:tail
+                )
+                | Choice (r1, r2), s, e ->
+                    _create
+                        ~case:()
+                        ~id:
+                        ~res:(() :: res)
+                        ~stack:
+                | Listing clist, s, e ->
+                | Range (c1, c2), s, e ->
+                | Concatenation (r1, r2), s, e -> (
+                    _create ~case:(r1, s, id + 1) ~id:id ~res:res ~stack:((r2, e) :: stack)
+                )
+                | Repetition r, s, e ->
+                | Pos_repetition r, s, e ->
+                | Def_repetition r, s, e ->
+                | Possibility r, s, e ->
+                | Construct t, s, e ->
 
         let create case =
-            _create ~case:case ~id:0 ~res:[] ~meta:[]
+            _create ~case:(case, 1, 0) ~id:1 ~res:[(0, Final, [])] ~stack:[]
 
     end
 ;;
