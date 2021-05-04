@@ -30,7 +30,10 @@ module NFA : NFA =
                 type t = Int.t
             end
 
-        type atom = (State.category * (State.t * Automaton.transition) List.t)
+        type atom = {
+            category : State.category ;
+            adjacencies : (State.t * Automaton.transition) List.t
+        }
 
         type t = atom Array.t (* State.t is used to index *)
 
@@ -52,20 +55,21 @@ module NFA : NFA =
         let atom_of : State.t * atom -> atom =
             fun (_, a) -> a
 
-        let make : atom List.t -> atom Array.t =
+        let make : atom List.t -> Int.t -> atom Array.t =
             (* TODO *)
 
+        (* stack is used for tail recursion. *)
         let rec _create ~case ~id ~res ~stack =
             match case with
                 | Single tr, s, e -> (
                     match stack with
                         | [] ->
-                            make (s, Non_final, [e, tr]) :: res
+                            make ((s, { category = Non_final ; adjacencies = [e, tr] }) :: res) (id + 1)
                         | (r, qs, qe) :: tail ->
                             _create
                                 ~case:(r, qs, qe)
                                 ~id:id
-                                ~res:((s, Non_final, [(e, tr)]) ::
+                                ~res:((s, { category = Non_final ; adjacencies = [(e, tr)] }) ::
                                     res)
                                 ~stack:tail
                 )
@@ -73,9 +77,9 @@ module NFA : NFA =
                     _create
                         ~case:(r1, id, id + 2)
                         ~id:(id + 3)
-                        ~res:((id + 2, Non_final, [(e, Empty)]) ::
-                            (id + 3, Non_final, [(e, Empty)]) ::
-                            (s, Non_final, [(id, Empty); (id + 1, Empty)]) ::
+                        ~res:((id + 2, { category = Non_final ; adjacencies = [(e, Empty)] }) ::
+                            (id + 3, { category = Non_final ; adjacencies = [(e, Empty)] }) ::
+                            (s, { category = Non_final ; adjacencies = [(id, Empty); (id + 1, Empty)] }) ::
                             res)
                         ~stack:((r2, id + 1, id + 3) :: stack)
                 | Listing clist, s, e ->
