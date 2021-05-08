@@ -31,7 +31,7 @@ module type Sig =
             sig
                 type category = Non_final | Final
 
-                type t = Int.t (* TODO: concrete *)
+                type t
             end
 
         type t
@@ -40,9 +40,7 @@ module type Sig =
 
         val category_of : State.t -> State.category
 
-        val starting_status : t -> State.t
-
-        val current_status : t -> State.t
+        val starting_state : t -> State.t
 
         val choose : t -> State.t -> Char.t -> (State.t, _) Set.t (* TODO: fix *)
     end

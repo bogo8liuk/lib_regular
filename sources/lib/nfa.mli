@@ -23,6 +23,22 @@ module type Sig =
     sig
         include Automaton.Sig
 
+        module State :
+            sig
+                type category = Non_final | Final
+
+                type t = Int.t (* Concrete *)
+            end
+
+        (* type t concrete: each type of automaton has the same "mold" *)
+        type atom = {
+            category : State.category ;
+            adjacencies : (State.t * Automaton.transition) List.t
+        }
+
+        (* State.t is used to index *)
+        type t = atom Array.t
+
         type regular_case =
             | Single of Automaton.transition
             | Choice of regular_case * regular_case
@@ -35,7 +51,15 @@ module type Sig =
             | Possibility of regular_case
             | Construct of t
 
+        (* Redefinition *)
         val create : regular_case -> t
+
+        (* The following redefinitions are necessary to avoid illegal shadowing. *)
+        val category_of : State.t -> State.category
+
+        val starting_state : t -> State.t
+
+        val choose : t -> State.t -> Char.t -> (* TODO: something *)
     end
 
 module Machine : Sig

@@ -23,7 +23,7 @@ open Base
 
 module Machine : Machine =
     struct
-        module State : State =
+        module State =
             struct
                 type category = Non_final | Final
 
@@ -35,7 +35,7 @@ module Machine : Machine =
             adjacencies : (State.t * Automaton.transition) List.t
         }
 
-        type t = atom Array.t (* State.t is used to index *)
+        type t = atom Array.t
 
         type regular_case =
             | Single of Automaton.transition
