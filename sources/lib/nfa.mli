@@ -38,5 +38,5 @@ module type Sig =
         val create : regular_case -> t
     end
 
-module NFA : Sig
+module Machine : Sig
 ;;

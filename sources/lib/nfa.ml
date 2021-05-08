@@ -21,7 +21,7 @@ SOFTWARE.
 
 open Base
 
-module NFA : NFA =
+module Machine : Machine =
     struct
         module State : State =
             struct
@@ -122,6 +122,13 @@ module NFA : NFA =
                                 ~stack:(((Def_repetition (r, n - 1)), id + 1, e) :: stack)
                 )
                 | (Possibility r), s, e ->
+                    _create
+                        ~case:(r, id + 1, id + 2)
+                        ~id:(id + 2)
+                        ~res:((id + 2, { category = Non_final ; adjacencies = [(e, Empty)] }) ::
+                            (s, { category = Non_final ; adjacencies = [(e, Empty); (id + 1, Empty)] }) ::
+                            res)
+                        ~stack:stack
                 | (Construct t), s, e ->
 
         let create case =
